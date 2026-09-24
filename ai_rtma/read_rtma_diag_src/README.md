@@ -1,5 +1,8 @@
 # read_rtma_diag
 
+This code was refactored from Matthew Morris’s original work. Many thanks to Matthew for sharing the code and for his help and support during its development.
+
+
 Reads GSI binary conventional-data diagnostic files (big-endian unformatted Fortran) and writes the observation metadata to a NetCDF4 file via the ncdiag library.
 
 Supported observation types match those written by GSI setup routines:
