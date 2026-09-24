@@ -1,0 +1,62 @@
+Similarly, to run read_diag_rad.exe, the namelist file namelist.rad is needed. It contains
+the same parameters as namelist.conv. Using the same case from section 5.2, copy
+diag_amsua_n18_ges.2011032212 to directory ./util/Analysis_Utilities/read_diag
+(executable sits in this directory) and then change the namelist.rad to:
+&iosetup
+infilename='./diag_amsua_n18_ges.2011032212',
+outfilename='./results_amsua_n18_ges',
+/
+Running the executable creates the text file results_amsua_n18_ges specified by the
+namelist in the directory read_diag_rad.exe runs.
+For the conventional observations, the data is stored in two arrays: rdiagbuf and cdiagbuf.
+Their contents are listed as follows:
+Cdiagbuf    = station id
+rdiagbuf(1) = observation type
+rdiagbuf(2) = observation subtype
+rdiagbuf(3) = observation latitude (degrees)
+rdiagbuf(4) = observation longitude (degrees)
+rdiagbuf(5) = station elevation (meters)
+rdiagbuf(6) = observation pressure (hPa)
+rdiagbuf(7) = observation height (meters)
+rdiagbuf(8) = observation time (hours relative to analysis time)
+rdiagbuf(9) = input prepbufr qc or event mark
+rdiagbuf(10)= setup qc or event mark (currently qtflg only)
+rdiagbuf(11)= read_prepbufr data usage flag
+rdiagbuf(12)= analysis usage flag (1=use, -1=not used)
+rdiagbuf(13)= nonlinear qc relative weight
+rdiagbuf(14)= prepbufr inverse obs error (K**-1)
+rdiagbuf(15)= read_prepbufr inverse obs error (K**-1)
+rdiagbuf(16)= final inverse observation error (K**-1)
+rdiagbuf(17)= temperature observation (K)
+rdiagbuf(18)= obs-ges used in analysis (K)
+rdiagbuf(19)= obs-ges without bias correction (K)
+
+
+
+For wind observations, the content after index 16 is:
+
+rdiagbuf(17) = u wind component observation (m/s)
+rdiagbuf(18) = u obs-ges used in analysis (m/s)
+rdiagbuf(19) = u obs-ges w/o bias correction (m/s)
+rdiagbuf(20) = v wind component observation (m/s)
+rdiagbuf(21) = v obs-ges used in analysis (m/s)
+rdiagbuf(22) = v obs-ges w/o bias correction (m/s)
+
+!
+
+The read_diag_conv.exe reads these arrays and outputs important information in the text
+file results_conv_anl specified by the user in the &iosetup namelist. Example:
+
+
+      Station   Obs   Obs    Obs    Obs     Obs    Obs    iuse    obs     O-F    oberror (always occupies last column)
+      ID        Type  Time   Lat    Lon     Press  Hght         value   (ddiff)
+ps @  21997   : 180   0.00  42.65  190.98  1013.20     10   1   1013.2   -0.35     2.0
+t  @  PADK    : 187  -0.07  51.88  183.35   993.34    200   1    276.0    0.33     2.0
+uv @  RD01709C: 242  -1.48  40.50  189.00   886.30  10000   1     14.04   3.12   -11.80  -0.24  2.0
+
+
+Note that for the uv field the last 4 variables are: uob, uob-uges, vob, vob-ges
+
+For q the output from this program converts from kg/kg to g/kg!
+
+
