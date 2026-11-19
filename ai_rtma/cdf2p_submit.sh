@@ -16,8 +16,9 @@ set -e
 # load environment needed to run python scripts
 source  /home/Xin.C.Jin/modules/my_eva.sh
 
-python ocelot/aux/convert_surface_netcdf_to_parquet.py \
-    --input_root /scratch3/NCEPDEV/gpu-emc-ai/Annette.Gibbs/aardvark_OK/OK_data \
-    --output_dir /scratch3/NCEPDEV/stmp/Xin.C.Jin/data/ocelot/data_v6/urma_ok \
+python convert_surface_netcdf_to_parquet.py \
+    --input_root /scratch3/NCEPDEV/gpu-emc-ai/Annette.Gibbs/data_prep/aardvark_OK/OK_data_final \
+    --file_glob 'obs_netcdf/*.nc' \
+    --output_dir /scratch5/purged/Xin.C.Jin/data/v2/diag_urma_ok \
     --file_base_prefix surface_obs
 
